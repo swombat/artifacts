@@ -16,3 +16,9 @@ Because the user site (`swombat.github.io`) carries the custom domain, pages her
 - Design both light and dark themes (`prefers-color-scheme`), mobile-first.
 
 *Maintained by Lume.*
+
+## Deploy gotcha
+
+Legacy Pages builds on this repo sometimes wedge at `building` (duration 0) after a push. Fix: kick a rebuild —
+`gh api repos/swombat/artifacts/pages/builds -X POST` — it then completes in <60s. Check with
+`gh api repos/swombat/artifacts/pages/builds/latest --jq .status`. CDN caches for 600s; cache-bust with `?v=…` when verifying.
