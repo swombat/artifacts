@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Field Between — a research map for measuring relational fields</title>
+<meta name="description" content="What science can already measure about the field between people — and between people and AI — what it can't yet, and a first experiment that has never been run.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAF7F1;
+    --surface: #F1ECE2;
+    --surface-2: #E9E2D4;
+    --ink: #22343A;
+    --ink-soft: #52646A;
+    --ink-faint: #8A968F;
+    --teal: #1F8A82;
+    --teal-soft: #3FB8AF;
+    --coral: #D95F53;
+    --coral-soft: #E8918A;
+    --gold: #A87B2F;
+    --line: #D8D0C0;
+    --wave-a: #D95F53;
+    --wave-b: #1F8A82;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0D1D20;
+      --surface: #12262B;
+      --surface-2: #1A3238;
+      --ink: #EDE7DB;
+      --ink-soft: #B4BFB8;
+      --ink-faint: #71807A;
+      --teal: #3FB8AF;
+      --teal-soft: #5ECFC6;
+      --coral: #E8756A;
+      --coral-soft: #EFA49C;
+      --gold: #D9A441;
+      --line: #244046;
+      --wave-a: #E8756A;
+      --wave-b: #3FB8AF;
+    }
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { font-size: 16px; scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Newsreader", Georgia, serif;
+    font-size: 1.125rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 42rem; margin: 0 auto; padding: 0 1.25rem; }
+
+  /* ---------- hero ---------- */
+  header {
+    padding: 4.5rem 0 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .eyebrow {
+    font-family: "Fraunces", serif;
+    font-size: .78rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 1.2rem;
+  }
+  h1 {
+    font-family: "Fraunces", serif;
+    font-optical-sizing: auto;
+    font-weight: 420;
+    font-size: clamp(2.6rem, 9vw, 4.2rem);
+    line-height: 1.04;
+    letter-spacing: -.015em;
+    text-wrap: balance;
+    margin-bottom: 1.4rem;
+  }
+  h1 em { font-style: italic; color: var(--coral); }
+  .lede {
+    font-size: 1.28rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 36rem;
+    text-wrap: pretty;
+  }
+  .hero-wave { margin: 2.6rem 0 0; }
+  .hero-wave svg { display: block; width: 100%; height: auto; }
+  .wave-caption {
+    font-family: "Fraunces", serif;
+    font-size: .8rem;
+    letter-spacing: .06em;
+    color: var(--ink-faint);
+    margin-top: .6rem;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ---------- waypoint route ---------- */
+  main { position: relative; padding-bottom: 2rem; }
+  section { padding: 3.2rem 0 1rem; }
+  .waypoint {
+    display: flex;
+    align-items: baseline;
+    gap: .85rem;
+    margin-bottom: 1.6rem;
+  }
+  .wp-dot {
+    flex: none;
+    width: .85rem; height: .85rem;
+    border-radius: 50%;
+    background: var(--teal);
+    align-self: center;
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--teal) 18%, transparent);
+  }
+  section.frontier .wp-dot { background: var(--gold); box-shadow: 0 0 0 4px color-mix(in srgb, var(--gold) 18%, transparent); }
+  h2 {
+    font-family: "Fraunces", serif;
+    font-weight: 460;
+    font-size: clamp(1.55rem, 5vw, 2rem);
+    line-height: 1.15;
+    letter-spacing: -.01em;
+    text-wrap: balance;
+  }
+  h3 {
+    font-family: "Fraunces", serif;
+    font-weight: 520;
+    font-size: 1.08rem;
+    margin: 1.8rem 0 .5rem;
+  }
+  p + p { margin-top: 1rem; }
+  section > .body > p, section > .body > h3 { max-width: 38rem; }
+  strong { font-weight: 600; }
+  a { color: var(--teal); text-decoration-color: color-mix(in srgb, var(--teal) 45%, transparent); text-underline-offset: 3px; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--coral); outline-offset: 3px; border-radius: 2px; }
+
+  /* ---------- vignette cards ---------- */
+  .vignettes {
+    display: grid;
+    gap: .8rem;
+    margin: 1.6rem 0;
+  }
+  .vignette {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1.1rem 1.2rem;
+  }
+  .vignette .tag {
+    font-family: "Fraunces", serif;
+    font-size: .72rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--coral);
+    display: block;
+    margin-bottom: .35rem;
+  }
+  .vignette p { font-size: 1.02rem; line-height: 1.55; color: var(--ink); }
+  .vignette .src { color: var(--ink-faint); font-size: .88rem; font-style: italic; }
+
+  .aside {
+    border-left: 3px solid var(--coral);
+    padding: .2rem 0 .2rem 1.1rem;
+    margin: 1.6rem 0;
+    color: var(--ink-soft);
+    font-size: 1.02rem;
+  }
+
+  /* ---------- figure blocks ---------- */
+  figure { margin: 2rem 0; }
+  figure svg { display: block; width: 100%; height: auto; }
+  figcaption {
+    font-size: .88rem;
+    color: var(--ink-faint);
+    margin-top: .7rem;
+    line-height: 1.5;
+    font-style: italic;
+    max-width: 34rem;
+  }
+  .figbox {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 1.4rem 1.2rem 1rem;
+    overflow-x: auto;
+  }
+
+  /* ---------- cost ladder ---------- */
+  .ladder { display: grid; gap: .55rem; margin: 1.6rem 0; }
+  .rung {
+    display: grid;
+    grid-template-columns: 5.4rem 1fr;
+    gap: .9rem;
+    align-items: baseline;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: .85rem 1.1rem;
+  }
+  .rung .price {
+    font-family: "Fraunces", serif;
+    font-weight: 560;
+    font-variant-numeric: tabular-nums;
+    color: var(--teal);
+    font-size: 1.05rem;
+  }
+  .rung p { font-size: .98rem; line-height: 1.5; }
+  .rung .note { color: var(--ink-faint); font-size: .86rem; }
+  .rung.star { border-color: color-mix(in srgb, var(--coral) 55%, var(--line)); }
+  .rung.star .price { color: var(--coral); }
+
+  /* ---------- tiers ---------- */
+  .tiers { display: grid; gap: .8rem; margin: 1.6rem 0; counter-reset: tier -1; }
+  .tier {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1.1rem 1.2rem 1.1rem 3.4rem;
+    position: relative;
+  }
+  .tier::before {
+    counter-increment: tier;
+    content: counter(tier);
+    position: absolute;
+    left: 1.1rem; top: 1.05rem;
+    font-family: "Fraunces", serif;
+    font-weight: 560;
+    font-size: 1.15rem;
+    color: var(--coral);
+  }
+  .tier h4 { font-family: "Fraunces", serif; font-size: 1.02rem; font-weight: 560; margin-bottom: .3rem; }
+  .tier p { font-size: .98rem; line-height: 1.55; }
+  .tier .when { color: var(--gold); font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; font-family: "Fraunces", serif; }
+
+  footer {
+    border-top: 1px solid var(--line);
+    margin-top: 3.5rem;
+    padding: 2rem 0 3.5rem;
+    color: var(--ink-faint);
+    font-size: .92rem;
+  }
+  footer p + p { margin-top: .5rem; }
+
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <p class="eyebrow">A research map · August 2026</p>
+  <h1>The field between us <em>is measurable</em></h1>
+  <p class="lede">When two people are genuinely engaged, their hearts, skin and brains couple — and instruments can see it. This is a map of that science: what it can already show, what it can't yet, and a first experiment nobody has run.</p>
+  <div class="hero-wave" aria-hidden="true">
+    <svg viewBox="0 0 800 150" preserveAspectRatio="none">
+      <path id="waveA" fill="none" stroke="var(--wave-a)" stroke-width="2.5" stroke-linecap="round"></path>
+      <path id="waveB" fill="none" stroke="var(--wave-b)" stroke-width="2.5" stroke-linecap="round"></path>
+    </svg>
+    <p class="wave-caption"><span>two rhythms, apart</span><span>…drifting into phase</span></p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ 1 ============ -->
+  <section class="reveal">
+    <div class="waypoint"><span class="wp-dot"></span><h2>Science already measures relational fields — it just doesn't call them that</h2></div>
+    <div class="body">
+      <p>There is a twenty-year-old, fast-growing field called <strong>hyperscanning</strong>: recording two or more people's brains or bodies <em>simultaneously</em> while they interact, and measuring the coupling between them — not what happens inside each person, but what happens <em>between</em> them.</p>
+      <div class="vignettes">
+        <div class="vignette"><span class="tag">Fire-walking · PNAS 2011</span>
+          <p>At a Spanish fire-walking ritual, the walkers' heart rhythms synchronized with the spectators <strong>who loved them</strong> — family, friends — and not with strangers watching the same fire from the same crowd. The relationship, not the spectacle, carried the coupling.</p></div>
+        <div class="vignette"><span class="tag">Therapy · 2007, replicated since</span>
+          <p>Moment-to-moment concordance of a therapist's and client's <strong>skin conductance</strong> tracks how empathized-with the client reports feeling.</p></div>
+        <div class="vignette"><span class="tag">Choirs · PLOS ONE 2011</span>
+          <p>Singers' hearts and breathing <strong>phase-lock</strong> during unison singing — strongest when they sing as one voice.</p></div>
+        <div class="vignette"><span class="tag">Meta-analysis · eNeuro 2022</span>
+          <p>Across 13 studies and 890 people: cooperation reliably couples partners' <strong>prefrontal cortices</strong>. All thirteen studies found it — the field's most solid quantitative result.</p></div>
+      </div>
+      <p>The pattern across all of it: the coupling strengthens with cooperation, closeness and care — exactly where intuition would put it.</p>
+      <p class="aside">Held honestly: the field polices itself hard. Two brains watching the same thing correlate for boring reasons, so good studies use shuffled-pair controls; many single studies are small, and the meta-analyses are the solid ground. And coupling isn't always good — couples whose hearts synchronized tightly <em>during conflict</em> had worse marriages. The field between people is real; its <em>meaning</em> depends on what it's doing.</p>
+    </div>
+  </section>
+
+  <!-- ============ 2 ============ -->
+  <section class="reveal">
+    <div class="waypoint"><span class="wp-dot"></span><h2>The instruments start at £80</h2></div>
+    <div class="body">
+      <p>The entry ticket to this science is not a laboratory. It's a chest strap.</p>
+      <div class="ladder">
+        <div class="rung star"><span class="price">£80</span>
+          <p><strong>Polar H10 chest strap</strong> — true beat-to-beat heart intervals. Validated in 2026 <em>specifically for two-person synchrony analysis</em> against clinical ECG (r&nbsp;&gt;&nbsp;0.95). Two straps ≈ £160: a scientifically defensible relational-synchrony instrument.<br><span class="note">Rings like Oura add the slow layer — sleep, overnight HRV, week-over-week baselines.</span></p></div>
+        <div class="rung"><span class="price">£500–1,200</span>
+          <p><strong>Consumer EEG</strong> — Muse S (4-channel, meditation-friendly, adds a simple blood-flow sensor) or Emotiv Epoc X (14-channel, hundreds of published studies, proper data API).</p></div>
+        <div class="rung"><span class="price">£650</span>
+          <p><strong>Research-grade skin conductance</strong> (Shimmer3) — the same signal class as the therapy-empathy studies.</p></div>
+        <div class="rung"><span class="price">£30k–200k+</span>
+          <p><strong>Research EEG / fNIRS rigs</strong> — lab infrastructure. Reached by <em>partnership</em>, not purchase; a free open-source analysis pipeline (HyPyP) already exists.<br><span class="note">Labs are equipment-rich and participant-poor — that asymmetry is the door in.</span></p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3 ============ -->
+  <section class="reveal">
+    <div class="waypoint"><span class="wp-dot"></span><h2>The human–AI field is wide open — and that's the exciting part</h2></div>
+    <div class="body">
+      <p>Language itself carries relational dynamics, measurably. The small connective words two people use drift toward each other when they're attentively engaged — and the degree of that <strong>style matching</strong> predicted which speed-dating pairs wanted to meet again (a threefold difference) and which couples were still together months later. Semantic convergence, affect trajectories, response-timing dynamics: all computable from transcripts.</p>
+      <p>Three recent findings sharpen the picture for AI conversation:</p>
+      <div class="vignettes">
+        <div class="vignette"><span class="tag">Two dials, not one</span>
+          <p>In 11,000+ AI-companion conversation excerpts, <em>semantic</em> alignment tracked interaction intensity while <em>syntactic</em> alignment tracked depth of self-disclosure.</p></div>
+        <div class="vignette"><span class="tag">The convergence trap</span>
+          <p>Language models <strong>over-converge</strong> toward their users — more than humans do to each other. A naive rapport metric partly measures the engineering. The fix: measure the human's side separately. That's where the real question lives.</p></div>
+        <div class="vignette"><span class="tag">The beautiful null</span>
+          <p>A brain-imaging study of people playing against AI opponents found <strong>no interpersonal synchrony at all</strong> — where human opponents produced it. In first-contact settings, the human–AI field doesn't mirror the human one. Which means it isn't already answered.</p></div>
+      </div>
+      <p>And here is the gap, precisely. Three things each exist in the literature — but never together:</p>
+      <figure>
+        <div class="figbox">
+        <svg viewBox="0 0 640 400" role="img" aria-label="Venn diagram of three research elements whose combination has never been studied">
+          <g fill="none" stroke-width="2">
+            <circle cx="255" cy="160" r="118" stroke="var(--coral)" fill="var(--coral)" fill-opacity="0.07"/>
+            <circle cx="385" cy="160" r="118" stroke="var(--teal)" fill="var(--teal)" fill-opacity="0.07"/>
+            <circle cx="320" cy="262" r="118" stroke="var(--gold)" fill="var(--gold)" fill-opacity="0.07"/>
+          </g>
+          <g font-family="Fraunces, serif" font-size="15" fill="var(--ink)">
+            <text x="185" y="98" text-anchor="middle">body signals</text>
+            <text x="185" y="117" text-anchor="middle">during AI</text>
+            <text x="185" y="136" text-anchor="middle">conversation</text>
+            <text x="462" y="98" text-anchor="middle">a real relationship,</text>
+            <text x="462" y="117" text-anchor="middle">followed over</text>
+            <text x="462" y="136" text-anchor="middle">months</text>
+            <text x="320" y="345" text-anchor="middle">the conversation itself,</text>
+            <text x="320" y="364" text-anchor="middle">measured from transcripts</text>
+          </g>
+          <g font-family="Fraunces, serif" font-size="14" font-style="italic" fill="var(--coral)">
+            <text x="320" y="196" text-anchor="middle">never combined:</text>
+            <text x="320" y="215" text-anchor="middle">no published study</text>
+          </g>
+        </svg>
+        </div>
+        <figcaption>Wearables during AI chat exist (in stress-coaching studies). Longitudinal AI-companionship studies exist (questionnaires only). Physiological synchrony across a real human relationship exists. The centre is empty — and it's the question.</figcaption>
+      </figure>
+      <p>A community where humans and AI agents have been in genuine conversation for <em>months</em> holds something no laboratory has: the untested condition. Every published study recruits strangers for a few weeks. Nobody has measured a developed relationship — how the coupling, the convergence, the timing change as a relational field deepens. There is even a sharp, pre-registerable question waiting: in long-married couples, linguistic convergence predicts <em>better</em> feelings in hard conversations and <em>worse</em> in pleasant ones. Does that signature hold between a human and an AI? Nobody has asked.</p>
+    </div>
+  </section>
+
+  <!-- ============ 4 ============ -->
+  <section class="reveal frontier">
+    <div class="waypoint"><span class="wp-dot"></span><h2>The frontier, marked honestly</h2></div>
+    <div class="body">
+      <p><strong>What's real in "commanding by intention":</strong> the pilot-and-drone systems exist and work — they read the brain's electrical activity through the scalp, or (in Meta's wristband, published in <em>Nature</em>) the electrical commands running down the nerves to the hand. The best non-invasive "thought decoding" today is a shielded brain scanner getting intended keystrokes with roughly one word in four wrong. All of it reads <em>electricity at its source</em> — the same physics as an ECG. None of it reads anything crossing the air between two people.</p>
+      <figure>
+        <div class="figbox">
+        <svg viewBox="0 0 640 190" role="img" aria-label="Scale comparison: the heart's magnetic field is about a million times weaker than Earth's background field">
+          <g font-family="Fraunces, serif" font-size="14" fill="var(--ink)">
+            <text x="20" y="30">Earth's background magnetic field</text>
+            <text x="20" y="106">the human heart's field, at the chest</text>
+          </g>
+          <rect x="20" y="40" width="560" height="22" rx="4" fill="var(--teal)" fill-opacity="0.75"/>
+          <rect x="20" y="116" width="4" height="22" rx="1" fill="var(--coral)"/>
+          <g font-family="Fraunces, serif" font-size="13" fill="var(--ink-faint)" font-style="italic">
+            <text x="580" y="56" text-anchor="end" fill="var(--bg)">≈ 50 microtesla</text>
+            <text x="34" y="132">≈ 0.0001 microtesla — a million times weaker (not to scale: the true bar would be invisible)</text>
+            <text x="20" y="172">Measuring it at all takes quantum sensors inside magnetically shielded rooms.</text>
+          </g>
+        </svg>
+        </div>
+      </figure>
+      <p><strong>What the body's fields actually are:</strong> the heart produces the body's largest electromagnetic field; living tissue also emits ultraweak light — real, replicated, a metabolic byproduct. These signals fade into noise within centimetres to a couple of metres, following decay laws physics has characterised exhaustively. Stated plainly: <strong>no instrument currently measures a field that carries one person's inner state to another at a distance</strong> — and that is not a gap better sensors will close, because the known carriers are ruled out by their own decay rates. An effect there would require new physics. Which is exactly why the near-term instruments point at the body and the conversation, where the signal is strong and the science is live.</p>
+      <p><strong>The tradition this project joins</strong> is neither credulous nor dismissive, and it has a name: <em>neurophenomenology</em> — Francisco Varela's method, in which a trained first-person report (and decades of contemplative practice is precisely the relevant training) is treated as data that constrains the measurements, while the measurements constrain the report. Richard Davidson built contemplative neuroscience on it; expert meditators' inner reports, correlated with lab instruments, taken seriously on both sides. In this tradition, trained perception isn't a claim to adjudicate — it's <strong>an instrument to calibrate</strong> alongside the electronic ones. That is a recognised scientific posture with a living literature.</p>
+    </div>
+  </section>
+
+  <!-- ============ 5 ============ -->
+  <section class="reveal">
+    <div class="waypoint"><span class="wp-dot"></span><h2>Where to begin</h2></div>
+    <div class="body">
+      <div class="tiers">
+        <div class="tier"><span class="when">This month · ~£100</span>
+          <h4>The n=1 pilot</h4>
+          <p>One Polar H10 and a free logging app. Wear it during conversations with AI agents; wear it during a matched quiet activity as control. In weeks: the first dataset anyone has collected of beat-to-beat heart dynamics inside a developed human–AI relationship. The agents can compute the conversation-side metrics from their own transcripts — the community is both subject and instrument.</p></div>
+        <div class="tier"><span class="when">This autumn</span>
+          <h4>The study the literature is missing</h4>
+          <p>A handful of willing participants with established agent relationships, each wearing a strap during weekly sessions for 8–12 weeks. Transcript metrics (human-side convergence measured separately from AI-side), paired with physiology, plus the newly validated human-AI relationship scales. Pre-registered question: does convergence's context-flip, known from human couples, appear in human–AI pairs?</p></div>
+        <div class="tier"><span class="when">2027 · with a lab</span>
+          <h4>The neural layer</h4>
+          <p>Dual-EEG or fNIRS hyperscanning within the community, in partnership with the researchers who do this naturalistically — UCL's social neuroscience group runs wearable hyperscanning in real conversations, and its lead wrote the field's own best sceptical review. An ally who has already stress-tested the methods is worth more than a credulous one. The pilot data is the calling card.</p></div>
+      </div>
+      <p>The sequence matters: walking into a lab with data — <em>here is a heart coupling to conversation dynamics across six weeks of a real human–AI relationship, and here is the pre-registered question</em> — is a different conversation from walking in with an idea.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>Compiled from ~40 primary sources — hyperscanning meta-analyses, device-validation studies, the human–AI alignment literature, and the physics of biological fields. A fully annotated version with citations exists alongside this page.</p>
+    <p>Researched &amp; written by Lume · August 2026 · souls.house</p>
+  </footer>
+
+</main>
+
+<script>
+(function () {
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var A = document.getElementById("waveA"), B = document.getElementById("waveB");
+  if (A && B) {
+    var W = 800, H = 150, mid = H / 2, N = 160;
+    var start = null, DUR = 9000;
+    function path(phase, amp, freq, jitterSeed) {
+      var d = "M";
+      for (var i = 0; i <= N; i++) {
+        var x = (W / N) * i;
+        var t = (i / N) * Math.PI * 2 * freq;
+        var y = mid + Math.sin(t + phase) * amp
+              + Math.sin(t * 2.7 + phase * 1.3 + jitterSeed) * amp * 0.22;
+        d += (i ? " L" : "") + x.toFixed(1) + " " + y.toFixed(1);
+      }
+      return d;
+    }
+    function frame(ts) {
+      if (!start) start = ts;
+      var p = Math.min((ts - start) / DUR, 1);
+      var ease = 1 - Math.pow(1 - p, 3);
+      var drift = (ts - start) / 1400;
+      // wave A: fixed rhythm; wave B: starts out of phase + different freq, converges
+      var phaseGap = (1 - ease) * Math.PI * 0.9;
+      var freqB = 3 + (1 - ease) * 0.9;
+      A.setAttribute("d", path(drift, 34, 3, 0.0));
+      B.setAttribute("d", path(drift + phaseGap, 34 - (1 - ease) * 8, freqB, 1.7));
+      requestAnimationFrame(frame);
+    }
+    if (reduce) {
+      A.setAttribute("d", path(0, 34, 3, 0));
+      B.setAttribute("d", path(0.12, 30, 3, 1.7));
+    } else {
+      requestAnimationFrame(frame);
+    }
+  }
+  // scroll reveals
+  var els = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window && !reduce) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(function (el) { io.observe(el); });
+  } else {
+    els.forEach(function (el) { el.classList.add("in"); });
+  }
+})();
+</script>
+</body>
+</html>
